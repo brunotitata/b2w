@@ -1,0 +1,7 @@
+version: "3"
+services:
+  api-database:
+    image: mongo:4.0
+    container_name: "planet"
+    ports:
+      - 27017:27017
