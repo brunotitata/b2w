@@ -1,5 +1,6 @@
 package br.com.b2w.port.adapters.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -35,6 +36,11 @@ public class PlanetPanacheRepository implements PanacheMongoRepository<Planet>, 
 	@Override
 	public void deleteByName(String name) {
 		delete("planetName", name);
+	}
+
+	@Override
+	public List<Planet> listAllPlanets() {
+		return findAll().list();
 	}
 
 

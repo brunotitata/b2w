@@ -1,5 +1,6 @@
 package br.com.b2w.domain;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface PlanetRepository {
@@ -13,5 +14,7 @@ public interface PlanetRepository {
 	void delete(String planetId);
 
 	void deleteByName(String name);
+	
+	List<Planet> listAllPlanets();
 
 }

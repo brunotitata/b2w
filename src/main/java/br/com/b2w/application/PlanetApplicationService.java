@@ -2,6 +2,7 @@ package br.com.b2w.application;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
 
@@ -60,6 +61,13 @@ public class PlanetApplicationService {
 	
 	public void deletePlanetByPlanetId(String planetId) {
 		planetRepository.delete(planetId);
+	}
+	
+	public List<PlanetResponseDTO> listAllPlanets() {
+		return planetRepository.listAllPlanets()
+				.stream()
+				.map(Planet::of)
+				.collect(Collectors.toList());
 	}
 
 }

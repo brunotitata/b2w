@@ -1,61 +1,121 @@
-# b2w project
+# Sistema de cadastro de planetas
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Link para documentação da API:
+	[Documentacao da API](http://localhost:8080/q/swagger-ui/)
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+Execução:
+- Para realizar a execução do projeto, execute no raiz do projeto:
+```
+docker-compose up
+./mvnw quarkus:dev
+``` 
 
-## Running the application in dev mode
+Para realizar a execução do projeto em modo nativo do Quarkus, primeiramente a maquina necessita do GraalVM 21.0.0.2
+Instale o [jEnv](https://www.jenv.be/) (OPCIONAL) para agilizar no processo.
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
+Execute as etapas dentro do diretorio raiz do projeto:
+	- jenv add "diretorio do graalVM"
+	- jenv local 11.0.10
+	- gu install native-image
+	- ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
+	cd target/
+	./b2w-1.0.0-SNAPSHOT-runner
+
+## Endpoint para cadastrar um planeta
+Request:
+
+	POST http://localhost:8080/v1/planet
+	
+Body:
+
+```json 
+{
+    "planetName": "Tatooine",
+    "climate": "arid",
+    "terrain": "desert"
+}
+```
+Response: 201 (Created) Com id do recurso criado no atributo Location do header da resposta:
+
+	ex: Location → http://localhost:8080/v1/planet/8e25d9fe-b0ba-4105-a2be-687f715acf1c
+
+
+## Endpoint para listar todos planetas cadastrados
+
+Request:
+
+	GET http://localhost:8080/v1/planet/all
+	
+Response: 200 (Ok)
+	
+```json
+[
+    {
+        "planetId": "c8251072-280a-4ccc-98cd-b0cb9817641c",
+        "name": "Dagobah",
+        "climate": "arid",
+        "terrain": "desert",
+        "amountOfFilmAppearances": 3
+    },
+    {
+        "planetId": "f0b65246-56c6-4e7b-8ecd-39a98303a4aa",
+        "name": "Hoth",
+        "climate": "arid",
+        "terrain": "desert",
+        "amountOfFilmAppearances": 1
+    },
+    {
+        "planetId": "ca3bf641-6adb-461c-97e2-5d455db6cbbd",
+        "name": "Naboo",
+        "climate": "arid",
+        "terrain": "desert",
+        "amountOfFilmAppearances": 4
+    }
+]
+```
+	
+
+## Endpoint para buscar planeta por nome
+
+Request:
+
+	GET http://localhost:8080/v1/planet/{name}
+	
+Response: 200 (Ok)
+	
+```json
+{
+    "planetId": "ca3bf641-6adb-461c-97e2-5d455db6cbbd",
+    "name": "Naboo",
+    "climate": "arid",
+    "terrain": "desert",
+    "amountOfFilmAppearances": 4
+}
+```
+## Endpoint para buscar planeta por ID
+
+Request:
+
+	GET http://localhost:8080/v1/planet/test?id={planetId}
+	
+Response: 200 (Ok)
+	
+```json
+{
+    "planetId": "ca3bf641-6adb-461c-97e2-5d455db6cbbd",
+    "name": "Naboo",
+    "climate": "arid",
+    "terrain": "desert",
+    "amountOfFilmAppearances": 4
+}
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+## Endpoint para remover um planeta
 
-## Packaging and running the application
+Request:
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+	DELETE http://localhost:8080/v1/planet/{planetId}
+	
+Response: 204 (No Content)
+	
 
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
-```
-
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./mvnw package -Pnative
-```
-
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/b2w-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.html.
-
-## Related guides
-
-- Quarkus Extension for Spring Data REST ([guide](https://quarkus.io/guides/spring-data-rest)): Generate JAX-RS resources for a Spring Data application
-- Quarkus Extension for Spring DI API ([guide](https://quarkus.io/guides/spring-di)): Define your dependency injection with Spring DI
-- Quarkus Extension for Spring Web API ([guide](https://quarkus.io/guides/spring-web)): Use Spring Web annotations to create your REST services
-- Quarkus Extension for Spring Data JPA API ([guide](https://quarkus.io/guides/spring-data-jpa)): Use Spring Data JPA annotations to create your data access layer
-
-## Provided examples
-
-### Spring Web example
-
-Spring, the Quarkus way! A Hello World Spring Web Controller.
-
-[Related guide section...](https://quarkus.io/guides/spring-web#greetingcontroller)

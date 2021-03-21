@@ -1,5 +1,7 @@
 package br.com.b2w.port.adapters.resource;
 
+import java.util.List;
+
 import javax.ws.rs.core.UriBuilder;
 
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ import br.com.b2w.domain.PlanetDTO;
 import br.com.b2w.domain.PlanetResponseDTO;
 
 @RestController
-@RequestMapping("/planet")
+@RequestMapping("/v1/planet")
 public class PlanetController {
 
 	private PlanetApplicationService planetApplicationService;
@@ -26,13 +28,13 @@ public class PlanetController {
 		this.planetApplicationService = planetApplicationService;
 	}
 
-	@PostMapping
+	@PostMapping()
 	public ResponseEntity<Void> newPlanet(@RequestBody PlanetDTO planetDTO) {
 		
 		var planetId = planetApplicationService.createPlanet(planetDTO);
 		
 		return ResponseEntity.created(
-				UriBuilder.fromPath("/{planetId}")
+				UriBuilder.fromPath("/v1/planet/{planetId}")
 				.build(planetId))
 				.build();
 	}
@@ -53,6 +55,11 @@ public class PlanetController {
 		planetApplicationService.deletePlanetByPlanetId(planetId);
 		
 		return ResponseEntity.noContent().build();
+	}
+	
+	@GetMapping("/all")
+	public ResponseEntity<List<PlanetResponseDTO>> all() {
+		return ResponseEntity.ok(planetApplicationService.listAllPlanets());
 	}
 
 }
