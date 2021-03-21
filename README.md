@@ -14,12 +14,14 @@ Para realizar a execução do projeto em modo nativo do Quarkus, primeiramente a
 Instale o [jEnv](https://www.jenv.be/) (OPCIONAL) para agilizar no processo.
 
 Execute as etapas dentro do diretorio raiz do projeto:
+```
 	- jenv add "diretorio do graalVM"
 	- jenv local 11.0.10
 	- gu install native-image
 	- ./mvnw package -Pnative -Dquarkus.native.container-build=true -Dquarkus.container-image.build=true
 	cd target/
 	./b2w-1.0.0-SNAPSHOT-runner
+```
 
 ## Endpoint para cadastrar um planeta
 Request:
