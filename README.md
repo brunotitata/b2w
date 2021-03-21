@@ -11,6 +11,7 @@ docker-compose up
 ``` 
 
 Para realizar a execução do projeto em modo nativo do Quarkus, primeiramente a maquina necessita do GraalVM 21.0.0.2
+
 Instale o [jEnv](https://www.jenv.be/) (OPCIONAL) para agilizar no processo.
 
 Execute as etapas dentro do diretorio raiz do projeto:
