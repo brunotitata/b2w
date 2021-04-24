@@ -4,7 +4,7 @@ Link para documentação da API:
 	[Documentacao da API](http://localhost:8080/q/swagger-ui/)
 
 Execução:
-- Para realizar a execução do projeto que esta na versão *Java 11*, execute no raiz do projeto:
+- Para realizar a execução do projeto, execute no raiz do projeto:
 ```
 docker-compose up
 ./mvnw quarkus:dev
