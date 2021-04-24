@@ -38,6 +38,8 @@ public class PlanetTest {
 				RuntimeException.class, 
 				() -> new Planet(PLANET_ID, null, "Frozen", "Tundra"),
 				Planet.PLANET_NAME_ERROR_MSG);
+		
+		// adicionando comentario
 	}
 
 }
